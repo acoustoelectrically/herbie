@@ -40,6 +40,9 @@
 
   (reap [sow]
         (define global-batch-mutable (batch->mutable-batch global-batch)) ; Create a mutable batch
+        (define gen (approx spec (hole (representation-name repr) (0))))
+        (define idx (mutable-batch-munge! global-batch-mutable gen)) ; Munge gen
+        (sow (alt (batchref global-batch idx) `(taylor ,name ,var) (list altn) '()))))
         (for* ([var (in-list vars)]
                [transform-type transforms-to-try])
           (match-define (list name f finv) transform-type)
